@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.park.api.dao.LoginDao">
+	<insert id="save">
+		INSERT INTO sys_login (account, login_time, last_access,session_id,token) VALUES (#{ model.account },#{ model.login_time },#{ model.last_access },#{ model.session_id},#{ model.token});
+
+	</insert>
+	
+	<update id="update">
+	UPDATE sys_login
+			<set>
+					<if test="null != model.login_time"><![CDATA[login_time=#{ model.login_time },]]></if>
+					<if test="null != model.last_access"><![CDATA[last_access=#{ model.last_access },]]></if>
+					<if test="null != model.session_id"><![CDATA[session_id=#{ model.session_id },]]></if>
+					<if test="null != model.token"><![CDATA[token=#{ model.token },]]></if>
+					<if test="null != model.islogout"><![CDATA[islogout=#{ model.islogout },]]></if>
+		
+			</set>
+ 	WHERE  account=#{ model.account}
+	</update>
+	
+		<update id="updateById">
+	UPDATE sys_login
+			<set>
+					<if test="null != model.login_time"><![CDATA[login_time=#{ model.login_time },]]></if>
+					<if test="null != model.last_access"><![CDATA[last_access=#{ model.last_access },]]></if>
+					<if test="null != model.islogout"><![CDATA[islogout=#{ model.islogout },]]></if>
+		<if test="null != model.logout_time"><![CDATA[logout_time=#{ model.logout_time },]]></if>
+			</set>
+ 	WHERE  id=#{ model.id}
+	</update>
+	
+	
+	
+		<select id="findByAccount" resultType="login2">
+		SELECT id, account, login_time, last_access, session_id,islogout,logout_time FROM sys_login WHERE account=#{val} AND
+	 login_time=(	SELECT max(login_time) FROM sys_login	where account=#{val})
+	
+	</select>
+	
+	<select id="findBySessionid" resultType="login2">
+		SELECT id, account, login_time, last_access, session_id,islogout,logout_time FROM sys_login WHERE session_id=#{val} AND login_time=
+		(SELECT max(login_time) FROM sys_login WHERE session_id=#{val})
+	
+	</select>
+	
+	<select id="findBySessionidAndToken" resultType="login2">
+		SELECT id, account, login_time, last_access, session_id,islogout,logout_time FROM sys_login WHERE  token=#{token} AND login_time=
+		(SELECT max(login_time) FROM sys_login WHERE  token=#{token} )
+	
+	</select>
+	
+	<delete id="delete">
+	delete from sys_login where account = #{account}
+	
+	</delete>
+</mapper>

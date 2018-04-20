@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+<appid>wx9790959ed57a1e3e</appid>
+<!-- #应用秘钥 -->
+<appsecret>7d6d7f42e016fca872370df2e5dd96cc</appsecret>
+	
+<!-- #商户号 -->
+<mchid>1492919892</mchid>
+<!-- #这个参数partnerkey是在商户后台配置的一个32位的key,微信商户平台-账户设置-安全设置-api安全 -->
+<parinerkey>49a9b3c445d34314aa9f13038dd9aa16</parinerkey>
+<notfiy_url>http://m.0791jr.com/sapi/wx/notify.do</notfiy_url>
+
+</xml>
