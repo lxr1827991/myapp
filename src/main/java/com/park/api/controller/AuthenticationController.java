@@ -6,8 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.lxapp.appsession.AppSessionUtils;
+import com.lxapp.appsession.AppSession;
 import com.lxapp.appsession.bean.AppClient;
+import com.lxapp.appsession.utils.AppSessionUtils;
 import com.lxapp.common.JsonResult;
 import com.lxapp.common.VcodeFactory;
 import com.lxapp.common.bean.Vcode;
@@ -74,6 +75,31 @@ public class AuthenticationController extends BaseController{
 	public Object test(String vcode) {
 		
 		if(vcode!=null)AppSessionUtils.getSession().putAttr("code", vcode);
+		
+		JsonResult jsonResult = JsonResult.getSuccessResult(AppSessionUtils.getSession().getAttr("code"));
+		jsonResult.setSid(AppSessionUtils.getSession().getId());
+		
+		return jsonResult;
+
+	}
+	
+	@RequestMapping("test2")
+	@ResponseBody
+	public Object test2(String vcode) {
+		AppSession session = AppSessionUtils.getSession();
+		Object c = session.getAttr("code");
+		if(c==null) {c="1";
+		}else {
+			c+="1";
+			
+		}
+		
+		if (c.toString().length()>2) {
+			AppSessionUtils.getSession().setForever();
+		}
+		
+		AppSessionUtils.getSession().putAttr("code", c);
+		
 		
 		JsonResult jsonResult = JsonResult.getSuccessResult(AppSessionUtils.getSession().getAttr("code"));
 		jsonResult.setSid(AppSessionUtils.getSession().getId());

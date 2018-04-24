@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../config/ehcache.xsd">
-    <diskStore path="java.io.tmpdir"/>
+    <diskStore path="F://ehcache"/>
     <!-- DefaultCache setting. -->
     <defaultCache
             maxElementsInMemory="100"
@@ -17,9 +17,14 @@
     <cache name="appSession"  
         maxElementsInMemory="100"  
         eternal="false"  
-        timeToIdleSeconds="200"  
-        timeToLiveSeconds="4000"  
+        timeToIdleSeconds="200"
+        timeToLiveSeconds="4000"
         overflowToDisk="true"/> 
     
+    <cache name="appSessionForever"  
+    	maxElementsOnDisk="0"
+        maxElementsInMemory="2000"  
+        eternal="true" 
+        overflowToDisk="true"/> 
 
 </ehcache>
